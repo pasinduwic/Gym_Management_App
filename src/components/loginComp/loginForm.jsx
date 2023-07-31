@@ -57,7 +57,7 @@ const LoginForm = () => {
       // console.log(user);
       navigate(from, { replace: true });
     } catch (e) {
-      console.log(e);
+      // console.log(e);
       dispatch(
         addAlertDetails({
           status: true,

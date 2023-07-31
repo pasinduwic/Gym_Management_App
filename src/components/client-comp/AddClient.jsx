@@ -7,7 +7,7 @@ import {
   addAlertDetails,
   addModalTogal,
   addSessionUser,
-  setRefresh
+  setRefresh,
 } from "../../redux/features/StatusVar";
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -21,7 +21,7 @@ const validationSchema = yup.object().shape({
   lastName: yup.string().required("Last name is required!"),
   phoneNumber: yup.string().required("Phone Number is required!"),
   assignedCoach: yup.string().required("Coach is required!"),
-  registeredDate: yup.string().required("Registered is required!")
+  registeredDate: yup.string().required("Registered is required!"),
 });
 
 const AddClient = ({ clientNo, coachList }) => {
@@ -30,7 +30,7 @@ const AddClient = ({ clientNo, coachList }) => {
   const dispatch = useDispatch();
   const [addData, setAddData] = useState({
     clientNo: clientNo,
-    nextPaymentDate: moment().add(2, "d").format("YYYY-MM-DD")
+    nextPaymentDate: moment().add(2, "d").format("YYYY-MM-DD"),
   });
   const [addRegistrationData, setAddRegistrationData] = useState({});
   const [loader, setLoader] = useState(false);
@@ -56,9 +56,9 @@ const AddClient = ({ clientNo, coachList }) => {
       const responce = await axiosPrivate.post("/api/client", addData, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `token ${sessionUser.accessToken}`
+          Authorization: `token ${sessionUser.accessToken}`,
         },
-        withCredentials: true
+        withCredentials: true,
         // signal: controller.signal
       });
       // console.log(responce.data);
@@ -71,7 +71,7 @@ const AddClient = ({ clientNo, coachList }) => {
           addAlertDetails({
             status: true,
             type: "error",
-            message: "Something went wrong!"
+            message: "Something went wrong!",
           })
         );
       }
@@ -80,14 +80,14 @@ const AddClient = ({ clientNo, coachList }) => {
         addAlertDetails({
           status: true,
           type: "success",
-          message: "Client added successfully!"
+          message: "Client added successfully!",
         })
       );
       setAddRegistrationFee(true);
       setAddRegistrationData({
         client: responce.data._id,
         type: 6,
-        date: moment().format("YYYY-MM-DD")
+        date: moment().format("YYYY-MM-DD"),
       });
       dispatch(setRefresh(!refreshData));
     } catch (e) {
@@ -95,7 +95,7 @@ const AddClient = ({ clientNo, coachList }) => {
         addAlertDetails({
           status: true,
           type: "error",
-          message: "Something went wrong!"
+          message: "Something went wrong!",
         })
       );
     } finally {
@@ -115,13 +115,13 @@ const AddClient = ({ clientNo, coachList }) => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `token ${sessionUser.accessToken}`
+            Authorization: `token ${sessionUser.accessToken}`,
           },
-          withCredentials: true
+          withCredentials: true,
           // signal: controller.signal
         }
       );
-      console.log(responce.data);
+      // console.log(responce.data);
       if (responce.data.error === "Invalid!") {
         dispatch(addSessionUser({ type: "remove", payload: sessionUser }));
         return navigate("/", { state: { from: location }, replace: true });
@@ -131,7 +131,7 @@ const AddClient = ({ clientNo, coachList }) => {
           addAlertDetails({
             status: true,
             type: "error",
-            message: "Something went wrong!"
+            message: "Something went wrong!",
           })
         );
       }
@@ -140,7 +140,7 @@ const AddClient = ({ clientNo, coachList }) => {
         addAlertDetails({
           status: true,
           type: "success",
-          message: "Payment added successfully!"
+          message: "Payment added successfully!",
         })
       );
       dispatch(addModalTogal(false));
@@ -150,7 +150,7 @@ const AddClient = ({ clientNo, coachList }) => {
         addAlertDetails({
           status: true,
           type: "error",
-          message: "Something went wrong!"
+          message: "Something went wrong!",
         })
       );
     } finally {
@@ -167,7 +167,7 @@ const AddClient = ({ clientNo, coachList }) => {
     newData[fieldName] = fieldValue;
 
     setAddData(newData);
-    console.log(newData);
+    // console.log(newData);
   };
   const handelFeeOnChange = (e) => {
     const fieldName = e.target.getAttribute("name");
@@ -177,7 +177,7 @@ const AddClient = ({ clientNo, coachList }) => {
     newData[fieldName] = fieldValue;
 
     setAddRegistrationData(newData);
-    console.log(newData);
+    // console.log(newData);
   };
 
   return (
@@ -185,7 +185,7 @@ const AddClient = ({ clientNo, coachList }) => {
       sx={{
         margin: " 10px 10px 100px 10px",
         textAlign: "left",
-        padding: "20px"
+        padding: "20px",
       }}
     >
       <div
@@ -193,7 +193,7 @@ const AddClient = ({ clientNo, coachList }) => {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          marginBottom: "28px"
+          marginBottom: "28px",
         }}
       >
         <h3>Add Client</h3>
@@ -221,7 +221,7 @@ const AddClient = ({ clientNo, coachList }) => {
             phoneNumber: "",
             registeredDate: "",
             type: "",
-            asignedCoach: ""
+            asignedCoach: "",
           }}
           onSubmit={(values) => {
             handleFormSubmit();
@@ -234,7 +234,7 @@ const AddClient = ({ clientNo, coachList }) => {
             values,
             touched,
             isValid,
-            errors
+            errors,
           }) => (
             <Form noValidate>
               <Row>

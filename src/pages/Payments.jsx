@@ -10,7 +10,7 @@ import {
   addAlertDetails,
   addModalTogal,
   addSessionUser,
-  setTableLoader
+  setTableLoader,
 } from "../redux/features/StatusVar";
 import { useLocation, useNavigate } from "react-router-dom";
 import UpdateClient from "../components/client-comp/UpdateClient";
@@ -36,10 +36,10 @@ const Payment = () => {
         const responce = await axiosPrivate.get("/api/payment", {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `token ${sessionUser.accessToken}`
+            Authorization: `token ${sessionUser.accessToken}`,
           },
           withCredentials: true,
-          signal: controller.signal
+          signal: controller.signal,
         });
         console.log(responce.data);
         if (responce.data.error === "Invalid!") {
@@ -51,7 +51,7 @@ const Payment = () => {
             addAlertDetails({
               status: true,
               type: "error",
-              message: "Something went wrong!"
+              message: "Something went wrong!",
             })
           );
         }
@@ -61,7 +61,7 @@ const Payment = () => {
           addAlertDetails({
             status: true,
             type: "error",
-            message: "failed to load data!"
+            message: "failed to load data!",
           })
         );
       } finally {
@@ -79,10 +79,10 @@ const Payment = () => {
         const responce = await axiosPrivate.get("/api/client", {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `token ${sessionUser.accessToken}`
+            Authorization: `token ${sessionUser.accessToken}`,
           },
           withCredentials: true,
-          signal: controller.signal
+          signal: controller.signal,
         });
         // console.log("coaches");
         // console.log(responce.data);
@@ -90,12 +90,16 @@ const Payment = () => {
           dispatch(addSessionUser({ type: "remove", payload: sessionUser }));
           return navigate("/", { state: { from: location }, replace: true });
         }
-        if (responce.data.error) {
+        // console.log(responce.data);
+        if (
+          responce.data.error &&
+          responce.data.error !== "No payments available!"
+        ) {
           return dispatch(
             addAlertDetails({
               status: true,
               type: "error",
-              message: "Something went wrong!"
+              message: "Something went wrong!",
             })
           );
         }
@@ -105,7 +109,7 @@ const Payment = () => {
           addAlertDetails({
             status: true,
             type: "error",
-            message: "failed to load data!"
+            message: "failed to load data!",
           })
         );
       }
@@ -122,7 +126,7 @@ const Payment = () => {
         row.client
           ? `${row.client?.firstName} ${row.client?.lastName}`
           : "Deleted Client",
-      id: "client"
+      id: "client",
     },
     {
       header: "Payment Type",
@@ -138,16 +142,16 @@ const Payment = () => {
           ? "Anual"
           : cell.getValue() === 4
           ? "Personal Training"
-          : "Other"
+          : "Other",
     },
     {
       header: "Amount",
-      accessorKey: "amount"
+      accessorKey: "amount",
     },
     {
       header: "Date",
       accessorKey: "date",
-      Cell: ({ cell }) => new Date(cell.getValue()).toLocaleDateString()
+      Cell: ({ cell }) => new Date(cell.getValue()).toLocaleDateString(),
     },
     {
       header: "Next Payment Date",
@@ -155,8 +159,8 @@ const Payment = () => {
       Cell: ({ cell }) =>
         cell.getValue()
           ? new Date(cell.getValue()).toLocaleDateString()
-          : "One time payment"
-    }
+          : "One time payment",
+    },
   ];
 
   return (
@@ -175,7 +179,7 @@ const Payment = () => {
                           status: true,
                           type: "error",
                           message:
-                            "Please Add atleast one Client before add a Payment!"
+                            "Please Add atleast one Client before add a Payment!",
                         })
                       )
                 }

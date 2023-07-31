@@ -9,7 +9,7 @@ import {
   addSessionUser,
   setRefresh,
   updateModalTogal,
-  setTableLoader
+  setTableLoader,
 } from "../../redux/features/StatusVar";
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -23,7 +23,7 @@ import UpdatePayment from "../payment-comp/UpdatePayment";
 const validationSchema = yup.object().shape({
   firstName: yup.string().required("First name is required!"),
   lastName: yup.string().required("Last name is required!"),
-  phoneNumber: yup.string().required("Phone Number is required!")
+  phoneNumber: yup.string().required("Phone Number is required!"),
 });
 
 const UpdateClient = ({ data, coachList }) => {
@@ -51,10 +51,10 @@ const UpdateClient = ({ data, coachList }) => {
         const responce = await axiosPrivate.get("/api/payment", {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `token ${sessionUser.accessToken}`
+            Authorization: `token ${sessionUser.accessToken}`,
           },
           withCredentials: true,
-          signal: controller.signal
+          signal: controller.signal,
         });
 
         if (responce.data.error === "Invalid!") {
@@ -66,7 +66,7 @@ const UpdateClient = ({ data, coachList }) => {
             addAlertDetails({
               status: true,
               type: "error",
-              message: "Something went wrong!"
+              message: "Something went wrong!",
             })
           );
         }
@@ -81,7 +81,7 @@ const UpdateClient = ({ data, coachList }) => {
           addAlertDetails({
             status: true,
             type: "error",
-            message: "failed to load data!"
+            message: "failed to load data!",
           })
         );
       } finally {
@@ -110,9 +110,9 @@ const UpdateClient = ({ data, coachList }) => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `token ${sessionUser.accessToken}`
+            Authorization: `token ${sessionUser.accessToken}`,
           },
-          withCredentials: true
+          withCredentials: true,
           // signal: controller.signal
         }
       );
@@ -126,7 +126,7 @@ const UpdateClient = ({ data, coachList }) => {
           addAlertDetails({
             status: true,
             type: "error",
-            message: "Something went wrong!"
+            message: "Something went wrong!",
           })
         );
       }
@@ -135,7 +135,7 @@ const UpdateClient = ({ data, coachList }) => {
         addAlertDetails({
           status: true,
           type: "success",
-          message: "Item updated successfully!"
+          message: "Item updated successfully!",
         })
       );
       setMode(0);
@@ -145,7 +145,7 @@ const UpdateClient = ({ data, coachList }) => {
         addAlertDetails({
           status: true,
           type: "error",
-          message: "Something went wrong!"
+          message: "Something went wrong!",
         })
       );
     } finally {
@@ -162,7 +162,7 @@ const UpdateClient = ({ data, coachList }) => {
     const newData = { ...updateDataInitial };
     newData[fieldName] = fieldValue;
     dispatch(addUpdateData(newData));
-    console.log(newData);
+    // console.log(newData);
   };
 
   const datForPicker = (date) => {
@@ -185,16 +185,16 @@ const UpdateClient = ({ data, coachList }) => {
           ? "Anual"
           : cell.getValue() === 4
           ? "Personal Training"
-          : "Other"
+          : "Other",
     },
     {
       header: "Amount",
-      accessorKey: "amount"
+      accessorKey: "amount",
     },
     {
       header: "Date",
       accessorKey: "date",
-      Cell: ({ cell }) => new Date(cell.getValue()).toLocaleDateString()
+      Cell: ({ cell }) => new Date(cell.getValue()).toLocaleDateString(),
     },
     {
       header: "Next Payment Date",
@@ -202,8 +202,8 @@ const UpdateClient = ({ data, coachList }) => {
       Cell: ({ cell }) =>
         cell.getValue()
           ? new Date(cell.getValue()).toLocaleDateString()
-          : "One time payment"
-    }
+          : "One time payment",
+    },
   ];
 
   return (
@@ -212,7 +212,7 @@ const UpdateClient = ({ data, coachList }) => {
         sx={{
           margin: " 10px 10px 100px 10px",
           textAlign: "left",
-          padding: "20px"
+          padding: "20px",
         }}
       >
         <div
@@ -220,7 +220,7 @@ const UpdateClient = ({ data, coachList }) => {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            marginBottom: "28px"
+            marginBottom: "28px",
           }}
         >
           <h3>Client Details</h3>
@@ -269,7 +269,7 @@ const UpdateClient = ({ data, coachList }) => {
             lastName: updateDataInitial.lastName,
             phoneNumber: updateDataInitial.phoneNumber,
             registeredDate: updateDataInitial.registeredDate,
-            type: updateDataInitial.type
+            type: updateDataInitial.type,
           }}
           onSubmit={(values) => {
             handleFormSubmit();
@@ -282,7 +282,7 @@ const UpdateClient = ({ data, coachList }) => {
             values,
             touched,
             isValid,
-            errors
+            errors,
           }) => (
             <Form>
               <Row>
@@ -548,7 +548,7 @@ const UpdateClient = ({ data, coachList }) => {
       <Card
         sx={{
           margin: " 10px 10px 100px 10px",
-          textAlign: "left"
+          textAlign: "left",
           // padding: "20px"
           // height: "100px"
         }}

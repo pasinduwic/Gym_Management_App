@@ -8,7 +8,7 @@ import {
   addAlertDetails,
   addSessionUser,
   setRefresh,
-  updateModalTogal
+  updateModalTogal,
 } from "../../redux/features/StatusVar";
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -20,7 +20,7 @@ const validationSchema = yup.object().shape({
   client: yup.string().required("Client is required!"),
   type: yup.number().required("Payment Type is required!"),
   amount: yup.number().required("Amount is required!"),
-  date: yup.string().required("Date is required!")
+  date: yup.string().required("Date is required!"),
 });
 
 const UpdatePayment = ({ data, clientList }) => {
@@ -38,7 +38,7 @@ const UpdatePayment = ({ data, clientList }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(updateDataInitial);
+    // console.log(updateDataInitial);
     return () => {
       dispatch(updateModalTogal(false));
     };
@@ -59,9 +59,9 @@ const UpdatePayment = ({ data, clientList }) => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `token ${sessionUser.accessToken}`
+            Authorization: `token ${sessionUser.accessToken}`,
           },
-          withCredentials: true
+          withCredentials: true,
           // signal: controller.signal
         }
       );
@@ -75,7 +75,7 @@ const UpdatePayment = ({ data, clientList }) => {
           addAlertDetails({
             status: true,
             type: "error",
-            message: "Something went wrong!"
+            message: "Something went wrong!",
           })
         );
       }
@@ -84,7 +84,7 @@ const UpdatePayment = ({ data, clientList }) => {
         addAlertDetails({
           status: true,
           type: "success",
-          message: "Item updated successfully!"
+          message: "Item updated successfully!",
         })
       );
       dispatch(setRefresh(!refreshData));
@@ -93,7 +93,7 @@ const UpdatePayment = ({ data, clientList }) => {
         addAlertDetails({
           status: true,
           type: "error",
-          message: "Something went wrong!"
+          message: "Something went wrong!",
         })
       );
     } finally {
@@ -127,7 +127,7 @@ const UpdatePayment = ({ data, clientList }) => {
             .format("YYYY-MM-DD"));
     }
     dispatch(addUpdateData(newData));
-    console.log(newData);
+    // console.log(newData);
   };
 
   const datForPicker = (date) => {
@@ -150,7 +150,7 @@ const UpdatePayment = ({ data, clientList }) => {
             amount: updateDataInitial.amount,
             client: updateDataInitial?.client?._id,
             date: updateDataInitial.date,
-            type: updateDataInitial?.type
+            type: updateDataInitial?.type,
           }}
           onSubmit={(values) => {
             handleFormSubmit();
@@ -163,7 +163,7 @@ const UpdatePayment = ({ data, clientList }) => {
             values,
             touched,
             isValid,
-            errors
+            errors,
           }) => (
             <Form>
               <Form.Group>
