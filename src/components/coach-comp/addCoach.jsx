@@ -7,7 +7,7 @@ import {
   addAlertDetails,
   addModalTogal,
   addSessionUser,
-  setRefresh
+  setRefresh,
 } from "../../redux/features/StatusVar";
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -17,7 +17,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 const validationSchema = yup.object().shape({
   firstName: yup.string().required("First name is required!"),
   lastName: yup.string().required("Last name is required!"),
-  phoneNumber: yup.string().required("Phone Number is required!")
+  phoneNumber: yup.string().required("Phone Number is required!"),
 });
 
 const AddCoach = ({ coachNoNew }) => {
@@ -30,7 +30,7 @@ const AddCoach = ({ coachNoNew }) => {
   const axiosPrivate = useAxiosPrivate();
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(coachNoNew);
+  // console.log(coachNoNew);
 
   useEffect(() => {
     return () => {
@@ -51,12 +51,12 @@ const AddCoach = ({ coachNoNew }) => {
       const responce = await axiosPrivate.post("/api/coach", addData, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `token ${sessionUser.accessToken}`
+          Authorization: `token ${sessionUser.accessToken}`,
         },
-        withCredentials: true
+        withCredentials: true,
         // signal: controller.signal
       });
-      console.log(responce.data);
+      // console.log(responce.data);
       if (responce.data.error === "Invalid!") {
         dispatch(addSessionUser({ type: "remove", payload: sessionUser }));
         return navigate("/", { state: { from: location }, replace: true });
@@ -66,7 +66,7 @@ const AddCoach = ({ coachNoNew }) => {
           addAlertDetails({
             status: true,
             type: "error",
-            message: "Something went wrong!"
+            message: "Something went wrong!",
           })
         );
       }
@@ -74,7 +74,7 @@ const AddCoach = ({ coachNoNew }) => {
         addAlertDetails({
           status: true,
           type: "success",
-          message: "Item added successfully!"
+          message: "Item added successfully!",
         })
       );
       dispatch(setRefresh(!refreshData));
@@ -83,7 +83,7 @@ const AddCoach = ({ coachNoNew }) => {
         addAlertDetails({
           status: true,
           type: "error",
-          message: "Something went wrong!"
+          message: "Something went wrong!",
         })
       );
     } finally {
@@ -101,7 +101,7 @@ const AddCoach = ({ coachNoNew }) => {
     newData[fieldName] = fieldValue;
 
     setAddData(newData);
-    console.log(newData);
+    // console.log(newData);
   };
 
   return (
@@ -119,7 +119,7 @@ const AddCoach = ({ coachNoNew }) => {
           initialValues={{
             firstName: "",
             lastName: "",
-            phoneNumber: ""
+            phoneNumber: "",
           }}
           onSubmit={(values) => {
             handleFormSubmit();
@@ -132,7 +132,7 @@ const AddCoach = ({ coachNoNew }) => {
             values,
             touched,
             isValid,
-            errors
+            errors,
           }) => (
             <Form noValidate>
               <Form.Group>

@@ -24,8 +24,8 @@ const DashboardCard = ({ value, name, image, viewList = undefined }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  console.log("value");
-  console.log(value);
+  // console.log("value");
+  // console.log(value);
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 

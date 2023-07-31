@@ -86,7 +86,7 @@ const Dashboard = () => {
           setPaymentList(pList);
         }
 
-        console.log(clientCount);
+        // console.log(clientCount);
         //fetching grap data
         const responcePayment = await axiosPrivate.get("/api/payment", {
           headers: {

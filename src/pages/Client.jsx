@@ -73,7 +73,7 @@ const Client = () => {
       }
     };
     getData();
-    console.log("CLient");
+    // console.log("CLient");
     return () => controller.abort();
   }, [refreshData]);
 

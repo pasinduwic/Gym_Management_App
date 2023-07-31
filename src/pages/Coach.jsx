@@ -44,7 +44,7 @@ const Coach = () => {
           dispatch(addSessionUser({ type: "remove", payload: sessionUser }));
           return navigate("/", { state: { from: location }, replace: true });
         }
-        console.log(responce.data);
+        // console.log(responce.data);
         if (
           responce.data.error &&
           responce.data.error !== "No coaches available!"
