@@ -12,7 +12,7 @@ import {
   addAlertDetails,
   addModalTogal,
   addSessionUser,
-  setTableLoader
+  setTableLoader,
 } from "../redux/features/StatusVar";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -34,22 +34,26 @@ const Coach = () => {
         const responce = await axiosPrivate.get("/api/coach", {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `token ${sessionUser.accessToken}`
+            Authorization: `token ${sessionUser.accessToken}`,
           },
           withCredentials: true,
-          signal: controller.signal
+          signal: controller.signal,
         });
         // console.log(responce);
         if (responce.data.error === "Invalid!") {
           dispatch(addSessionUser({ type: "remove", payload: sessionUser }));
           return navigate("/", { state: { from: location }, replace: true });
         }
-        if (responce.data.error) {
+        console.log(responce.data);
+        if (
+          responce.data.error &&
+          responce.data.error !== "No coaches available!"
+        ) {
           return dispatch(
             addAlertDetails({
               status: true,
               type: "error",
-              message: "Something went wrong!"
+              message: "Something went wrong!",
             })
           );
         }
@@ -59,7 +63,7 @@ const Coach = () => {
           addAlertDetails({
             status: true,
             type: "error",
-            message: "failed to load data!"
+            message: "failed to load data!",
           })
         );
       } finally {
@@ -74,17 +78,17 @@ const Coach = () => {
   const columns = [
     {
       header: "No",
-      accessorKey: "coachNo"
+      accessorKey: "coachNo",
     },
     {
       header: "Name",
       accessorFn: (row) => `${row.firstName} ${row.lastName}`,
-      id: "name"
+      id: "name",
     },
     {
       header: "Phone",
-      accessorKey: "phoneNumber"
-    }
+      accessorKey: "phoneNumber",
+    },
   ];
 
   return (

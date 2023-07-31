@@ -15,7 +15,7 @@ import {
   ListItemAvatar,
   ListItemText,
   Paper,
-  Typography
+  Typography,
 } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -23,7 +23,7 @@ import { useEffect, useState } from "react";
 import {
   addAlertDetails,
   addSessionUser,
-  addModalTogal
+  addModalTogal,
 } from "../redux/features/StatusVar";
 import { useDispatch } from "react-redux";
 import moment from "moment";
@@ -53,11 +53,12 @@ const Dashboard = () => {
         const responce = await axiosPrivate.get("/api/client", {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `token ${sessionUser?.accessToken}`
+            Authorization: `token ${sessionUser?.accessToken}`,
           },
           withCredentials: true,
-          signal: controller.signal
+          signal: controller.signal,
         });
+        // console.log(responce.data);
         if (responce.data.error === "Invalid!") {
           dispatch(addSessionUser({ type: "remove", payload: sessionUser }));
           return navigate("/", { state: { from: location }, replace: true });
@@ -67,29 +68,35 @@ const Dashboard = () => {
             addAlertDetails({
               status: true,
               type: "error",
-              message: "failed to load employee data!"
+              message: responce.data.error,
             })
           );
+          if (responce.data.error === "No clients available!") {
+            setClientCount(0);
+            setPaymentList([]);
+          }
         } else {
           setClientCount(responce.data.length);
           const pList = responce.data.filter((client) =>
             moment(new Date()).isAfter(moment(client.nextPaymentDate))
           );
 
-          // console.log(responce.data)
+          // console.log("responce.data");
+          // console.log(responce.data);
           setPaymentList(pList);
         }
 
+        console.log(clientCount);
         //fetching grap data
         const responcePayment = await axiosPrivate.get("/api/payment", {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `token ${sessionUser.accessToken}`
+            Authorization: `token ${sessionUser.accessToken}`,
           },
           withCredentials: true,
-          signal: controller.signal
+          signal: controller.signal,
         });
-
+        // console.log(responcePayment.data)
         if (responcePayment.data.error === "Invalid!") {
           dispatch(addSessionUser({ type: "remove", payload: sessionUser }));
           return navigate("/", { state: { from: location }, replace: true });
@@ -100,7 +107,7 @@ const Dashboard = () => {
             addAlertDetails({
               status: true,
               type: "error",
-              message: "failed to load graph data!"
+              message: "failed to load graph data!",
             })
           );
         } else {
@@ -108,63 +115,63 @@ const Dashboard = () => {
             {
               month: 1,
               amount: 0,
-              otAmount: 0
+              otAmount: 0,
             },
             {
               month: 2,
               amount: 0,
-              otAmount: 0
+              otAmount: 0,
             },
             {
               month: 3,
               amount: 0,
-              otAmount: 0
+              otAmount: 0,
             },
             {
               month: 4,
               amount: 0,
-              otAmount: 0
+              otAmount: 0,
             },
             {
               month: 5,
               amount: 0,
-              otAmount: 0
+              otAmount: 0,
             },
             {
               month: 6,
               amount: 0,
-              otAmount: 0
+              otAmount: 0,
             },
             {
               month: 7,
               amount: 0,
-              otAmount: 0
+              otAmount: 0,
             },
             {
               month: 8,
               amount: 0,
-              otAmount: 0
+              otAmount: 0,
             },
             {
               month: 9,
               amount: 0,
-              otAmount: 0
+              otAmount: 0,
             },
             {
               month: 10,
               amount: 0,
-              otAmount: 0
+              otAmount: 0,
             },
             {
               month: 11,
               amount: 0,
-              otAmount: 0
+              otAmount: 0,
             },
             {
               month: 12,
               amount: 0,
-              otAmount: 0
-            }
+              otAmount: 0,
+            },
           ];
 
           responcePayment.data.map((pay) => {
@@ -182,7 +189,7 @@ const Dashboard = () => {
           addAlertDetails({
             status: true,
             type: "error",
-            message: "failed to load data!"
+            message: "failed to load data!",
           })
         );
       }

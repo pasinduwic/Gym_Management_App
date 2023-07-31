@@ -10,7 +10,7 @@ import {
   addAlertDetails,
   addModalTogal,
   addSessionUser,
-  setTableLoader
+  setTableLoader,
 } from "../redux/features/StatusVar";
 import { useLocation, useNavigate } from "react-router-dom";
 import UpdateClient from "../components/client-comp/UpdateClient";
@@ -37,22 +37,25 @@ const Client = () => {
         const responce = await axiosPrivate.get("/api/client", {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `token ${sessionUser.accessToken}`
+            Authorization: `token ${sessionUser.accessToken}`,
           },
           withCredentials: true,
-          signal: controller.signal
+          signal: controller.signal,
         });
         // console.log(responce.data);
         if (responce.data.error === "Invalid!") {
           dispatch(addSessionUser({ type: "remove", payload: sessionUser }));
           return navigate("/", { state: { from: location }, replace: true });
         }
-        if (responce.data.error) {
+        if (
+          responce.data.error &&
+          responce.data.error !== "No clients available!"
+        ) {
           return dispatch(
             addAlertDetails({
               status: true,
               type: "error",
-              message: "Something went wrong!"
+              message: "Something went wrong!",
             })
           );
         }
@@ -62,7 +65,7 @@ const Client = () => {
           addAlertDetails({
             status: true,
             type: "error",
-            message: "failed to load data!"
+            message: "failed to load data!",
           })
         );
       } finally {
@@ -81,10 +84,10 @@ const Client = () => {
         const responce = await axiosPrivate.get("/api/coach", {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `token ${sessionUser.accessToken}`
+            Authorization: `token ${sessionUser.accessToken}`,
           },
           withCredentials: true,
-          signal: controller.signal
+          signal: controller.signal,
         });
         // console.log("coaches");
         // console.log(responce.data);
@@ -97,7 +100,7 @@ const Client = () => {
             addAlertDetails({
               status: true,
               type: "error",
-              message: "Something went wrong!"
+              message: "Something went wrong!",
             })
           );
         }
@@ -107,7 +110,7 @@ const Client = () => {
           addAlertDetails({
             status: true,
             type: "error",
-            message: "failed to load data!"
+            message: "failed to load data!",
           })
         );
       }
@@ -120,29 +123,29 @@ const Client = () => {
   const columns = [
     {
       header: "No",
-      accessorKey: "clientNo"
+      accessorKey: "clientNo",
     },
     {
       header: "Name",
       accessorFn: (row) => `${row?.firstName} ${row?.lastName}`,
-      id: "name"
+      id: "name",
     },
     {
       header: "Phone",
-      accessorKey: "phoneNumber"
+      accessorKey: "phoneNumber",
     },
     {
       header: "Client Type",
       accessorKey: "type",
       Cell: ({ cell }) =>
-        cell.getValue() === 1 ? "Member" : "Personal Traning"
+        cell.getValue() === 1 ? "Member" : "Personal Traning",
     },
     {
       header: "Assigned Coach",
       accessorFn: (row) =>
         `${row?.assignedCoach?.firstName} ${row?.assignedCoach?.lastName}`,
-      id: "assignedCoach"
-    }
+      id: "assignedCoach",
+    },
   ];
 
   return (
@@ -162,7 +165,7 @@ const Client = () => {
                             status: true,
                             type: "error",
                             message:
-                              "Please Add atleast one Coach before add a Client!"
+                              "Please Add atleast one Coach before add a Client!",
                           })
                         )
                   }

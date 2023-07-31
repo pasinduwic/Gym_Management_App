@@ -10,7 +10,7 @@ import {
   ListItemText,
   Popover,
   Skeleton,
-  Typography
+  Typography,
 } from "@mui/material";
 import moment from "moment";
 import { useState } from "react";
@@ -24,7 +24,8 @@ const DashboardCard = ({ value, name, image, viewList = undefined }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  console.log("value");
+  console.log(value);
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
@@ -36,13 +37,14 @@ const DashboardCard = ({ value, name, image, viewList = undefined }) => {
             display: "flex",
             flexDirection: "column",
             width: "60%",
-            justifyContent: "space-between"
+            justifyContent: "space-between",
           }}
         >
           <CardContent
             sx={{
               display: "flex",
-              flexDirection: "column"
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
             {value !== undefined ? (
@@ -60,7 +62,7 @@ const DashboardCard = ({ value, name, image, viewList = undefined }) => {
               color="text.secondary"
               onClick={handleClick}
               style={{
-                cursor: "pointer"
+                cursor: "pointer",
               }}
             >
               View List
@@ -73,11 +75,11 @@ const DashboardCard = ({ value, name, image, viewList = undefined }) => {
             onClose={handleClose}
             anchorOrigin={{
               vertical: "bottom",
-              horizontal: "center"
+              horizontal: "center",
             }}
             transformOrigin={{
               vertical: "top",
-              horizontal: "center"
+              horizontal: "center",
             }}
           >
             <Box sx={{ padding: "10px 20px", maxHeight: "300px" }}>
