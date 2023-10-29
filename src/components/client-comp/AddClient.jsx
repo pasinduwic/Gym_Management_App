@@ -255,7 +255,6 @@ const AddClient = ({ clientNo, coachList }) => {
                   />
                 </Form.Group>
                 <Form.Group as={Col}></Form.Group>
-                {/* <Form.Group as={Col}></Form.Group> */}
               </Row>
               <Row>
                 <Form.Group as={Col}>
