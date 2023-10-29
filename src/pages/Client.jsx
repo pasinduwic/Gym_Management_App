@@ -56,8 +56,9 @@ const Client = () => {
               status: true,
               type: "error",
               message: "Something went wrong!",
-            })
+            }),
           );
+          // console.log(tableData.length);
         }
         setTableData(responce.data);
       } catch (e) {
@@ -66,7 +67,7 @@ const Client = () => {
             status: true,
             type: "error",
             message: "failed to load data!",
-          })
+          }),
         );
       } finally {
         dispatch(setTableLoader(false));
@@ -101,7 +102,7 @@ const Client = () => {
               status: true,
               type: "error",
               message: "Something went wrong!",
-            })
+            }),
           );
         }
         setCoachList(responce.data);
@@ -111,11 +112,12 @@ const Client = () => {
             status: true,
             type: "error",
             message: "failed to load data!",
-          })
+          }),
         );
       }
     };
     getData();
+    // console.log(tableData.length);
     return () => controller.abort();
   }, []);
 
@@ -166,7 +168,7 @@ const Client = () => {
                             type: "error",
                             message:
                               "Please Add atleast one Coach before add a Client!",
-                          })
+                          }),
                         )
                   }
                   // variant="contained"
@@ -184,7 +186,12 @@ const Client = () => {
       <div className="page-content">
         {addModal ? (
           <AddClient
-            clientNo={tableData[tableData.length - 1].clientNo + 1}
+            clientNo={
+              tableData.length == 0
+                ? 1
+                : tableData[tableData.length - 1].clientNo + 1
+            }
+            // clientNo={1}
             coachList={coachList}
           />
         ) : updateModal ? (

@@ -28,6 +28,7 @@ const AddClient = ({ clientNo, coachList }) => {
   const addModal = useSelector((state) => state.statusVar.value.addModal);
   const refreshData = useSelector((state) => state.statusVar.value.refreshData);
   const dispatch = useDispatch();
+  // console.log(clientNo);
   const [addData, setAddData] = useState({
     clientNo: clientNo,
     nextPaymentDate: moment().add(2, "d").format("YYYY-MM-DD"),
@@ -72,7 +73,7 @@ const AddClient = ({ clientNo, coachList }) => {
             status: true,
             type: "error",
             message: "Something went wrong!",
-          })
+          }),
         );
       }
 
@@ -81,7 +82,7 @@ const AddClient = ({ clientNo, coachList }) => {
           status: true,
           type: "success",
           message: "Client added successfully!",
-        })
+        }),
       );
       setAddRegistrationFee(true);
       setAddRegistrationData({
@@ -96,7 +97,7 @@ const AddClient = ({ clientNo, coachList }) => {
           status: true,
           type: "error",
           message: "Something went wrong!",
-        })
+        }),
       );
     } finally {
       // dispatch(addModalTogal(false));
@@ -119,7 +120,7 @@ const AddClient = ({ clientNo, coachList }) => {
           },
           withCredentials: true,
           // signal: controller.signal
-        }
+        },
       );
       // console.log(responce.data);
       if (responce.data.error === "Invalid!") {
@@ -132,7 +133,7 @@ const AddClient = ({ clientNo, coachList }) => {
             status: true,
             type: "error",
             message: "Something went wrong!",
-          })
+          }),
         );
       }
 
@@ -141,7 +142,7 @@ const AddClient = ({ clientNo, coachList }) => {
           status: true,
           type: "success",
           message: "Payment added successfully!",
-        })
+        }),
       );
       dispatch(addModalTogal(false));
       dispatch(setRefresh(!refreshData));
@@ -151,7 +152,7 @@ const AddClient = ({ clientNo, coachList }) => {
           status: true,
           type: "error",
           message: "Something went wrong!",
-        })
+        }),
       );
     } finally {
       setLoader(false);
